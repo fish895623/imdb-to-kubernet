@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: my-nginx
-        image: fish895623/testapp # 도커 이미지
+        image: flaskapif.azurecr.io/a # 도커 이미지
         ports:
         - containerPort: 8080 # 외부로 노출할 컨테이너 포트
         resources: # 자원 제한
