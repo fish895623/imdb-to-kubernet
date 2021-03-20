@@ -17,3 +17,7 @@ spec:
           image: "flaskapif.azurecr.io/a"
           ports:
           - containerPort: 8080
+          resources: # 자원 제한
+          limits:
+            cpu: 10m
+            memory: 100Mi
