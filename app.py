@@ -17,13 +17,6 @@ def my_form_post():
     return jsonify(json_data)
 
 
-@app.route("/ff", methods=["GET"])
-def starting_url():
-    json_data = request.json
-    a_value = json_data["a_key"]
-    return "JSON value sent: " + a_value
-
-
 @app.route("/test")
 def imdb():
     value = ""
@@ -31,9 +24,11 @@ def imdb():
 
 
 @app.route("/test", methods=["POST"])
-def ffffaa():
-    imdb_input = request.form["imdb_input"]
-    return render_template("imdb.html", result=imdb_input, imdb_input=imdb_input)
+def imdb_post():
+    a0 = request.form["a0"]
+    a1 = request.form["a1"]
+    result = int(a0) + int(a1)
+    return render_template("imdb.html", result=result, a0=a0, a1=a1)
 
 
 if __name__ == "__main__":
