@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fish895623/testapp:latest
+    ports:
+      - 8080:8080

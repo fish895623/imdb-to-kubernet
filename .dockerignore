@@ -1,0 +1,4 @@
+.vscode/
+kubernetes.yml
+docker-compose.yml
+Dockerfile
