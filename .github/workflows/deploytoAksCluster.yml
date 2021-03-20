@@ -55,7 +55,6 @@ jobs:
       with:
         namespace: flask-app
         manifests: |
-          manifests/deployment.yml
           manifests/service.yml
         images: |
           flaskapif.azurecr.io/a:${{ github.sha }}
