@@ -32,7 +32,4 @@ spec:
         image: flaskapif.azurecr.io/a # 도커 이미지
         ports:
         - containerPort: 8080 # 외부로 노출할 컨테이너 포트
-        resources: # 자원 제한
-          limits:
-            cpu: 10m
-            memory: 100Mi
+
