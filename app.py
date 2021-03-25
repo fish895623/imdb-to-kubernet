@@ -1,34 +1,28 @@
-#!/usr/bin/env python3
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, render_template, request
 
+from IrisWeb import detect_iris
 
 app = Flask(__name__)
 
 
 @app.route("/")
-def aaaa():
+def index():
     return render_template("index.html")
 
 
-@app.route("/api", methods=["POST", "GET"])
-def my_form_post():
-    json_data = request.json
-    print(json_data["a_key"])
-    return jsonify(json_data)
-
-
-@app.route("/test")
+@app.route("/iris")
 def imdb():
-    value = ""
-    return render_template("imdb.html", value=value)
+    return render_template("iris.html")
 
 
-@app.route("/test", methods=["POST"])
-def imdb_post():
+@app.route("/iris", methods=["POST"])
+def my_form_post():
     a0 = request.form["a0"]
     a1 = request.form["a1"]
-    result = int(a0) + int(a1)
-    return render_template("imdb.html", result=result, a0=a0, a1=a1)
+    a2 = request.form["a2"]
+    a3 = request.form["a3"]
+    result = detect_iris(float(a0), float(a1), float(a2), float(a3))
+    return render_template("iris.html", a0=a0, a1=a1, a2=a2, a3=a3, result=result)
 
 
 if __name__ == "__main__":
