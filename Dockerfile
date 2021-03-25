@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.7-buster
 
 COPY ./requirements.txt /tmp/requirements.txt
 RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
