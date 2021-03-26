@@ -43,14 +43,20 @@ p_length_value = form.getvalue("p_length")
 p_width_value = form.getvalue("p_width")
 
 # (3) 판정 하기
-if (
-    s_length_value is not None
-    and s_width_value is not None
-    and p_length_value is not None
-    and p_width_value is not None
-):
-    result = detect_iris(s_length_value, s_width_value, p_length_value, p_width_value)
-    result = "해당 품종은 [ {} ] 입니다.".format(result)
-else:
-    result = "측정된 결과가 없습니다."
-# %%
+def getValue():
+    if (
+        s_length_value is not None
+        and s_width_value is not None
+        and p_length_value is not None
+        and p_width_value is not None
+    ):
+        result = detect_iris(
+            s_length_value,
+            s_width_value,
+            p_length_value,
+            p_width_value,
+        )
+        return result
+    else:
+        result = "측정된 결과가 없습니다."
+        return result

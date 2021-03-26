@@ -11,12 +11,12 @@ def index():
 
 
 @app.route("/iris")
-def imdb():
+def iris():
     return render_template("iris.html")
 
 
 @app.route("/iris", methods=["POST"])
-def my_form_post():
+def iris_post():
     a0 = request.form["a0"]
     a1 = request.form["a1"]
     a2 = request.form["a2"]
