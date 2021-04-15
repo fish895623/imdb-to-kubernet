@@ -5,4 +5,4 @@ RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
 RUN python3 -m pip install tensorflow-datasets
 COPY . /workspace/
 
-CMD python3 /workspace/app.py
+CMD cd workspace && python3 /workspace/app.py
