@@ -65,9 +65,9 @@ jobs:
           key: ${{ runner.os }}-docker-${{ hashFiles('Dockerfile') }}
 
 
-#       - name: load docker image from cache
-#         run: |
-#           docker load -i ~/.cache/docker/${IMAGE_NAME}.tar
+      - name: load docker image from cache
+        run: |
+          docker load -i ~/.cache/docker/${IMAGE_NAME}.tar
 
 
       - name: Build image
@@ -99,3 +99,17 @@ jobs:
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+
+
+      - name: deploy to cluster
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: '"apply -f manifest/service.yml --namespace imdb"'
+      - name: verify deployment
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: '"rollout restart deployment.apps/my-nginx --namespace imdb"'
