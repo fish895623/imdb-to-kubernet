@@ -65,9 +65,9 @@ jobs:
           key: ${{ runner.os }}-docker-${{ hashFiles('Dockerfile') }}
 
 
-      - name: load docker image from cache
-        run: |
-          docker load -i ~/.cache/docker/${IMAGE_NAME}.tar
+#       - name: load docker image from cache
+#         run: |
+#           docker load -i ~/.cache/docker/${IMAGE_NAME}.tar
 
 
       - name: Build image
