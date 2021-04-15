@@ -3,7 +3,6 @@ import re
 import time
 import urllib.request
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -55,13 +54,6 @@ class PositionalEncoding(tf.keras.layers.Layer):
 
 # %%
 sample_pos_encoding = PositionalEncoding(50, 128)
-
-plt.pcolormesh(sample_pos_encoding.pos_encoding.numpy()[0], cmap="RdBu")
-plt.xlabel("Depth")
-plt.xlim((0, 128))
-plt.ylabel("Position")
-plt.colorbar()
-plt.show()
 
 # %%
 def scaled_dot_product_attention(query, key, value, mask):
@@ -439,10 +431,6 @@ class CustomSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
 
 # %%
 sample_learning_rate = CustomSchedule(d_model=128)
-
-plt.plot(sample_learning_rate(tf.range(200000, dtype=tf.float32)))
-plt.ylabel("Learning Rate")
-plt.xlabel("Train Step")
 # %%
 urllib.request.urlretrieve(
     "https://raw.githubusercontent.com/songys/Chatbot_data/master/ChatbotData%20.csv",
@@ -557,17 +545,23 @@ def accuracy(y_true, y_pred):
     return tf.keras.metrics.sparse_categorical_accuracy(y_true, y_pred)
 
 
-es = EarlyStopping(monitor="accuracy", verbose=1, patience=5, restore_best_weights=True)
-mc = ModelCheckpoint(
-    "best_modela.h5",
-    save_weights_only=True,
-    monitor="accuracy",
-    save_best_only=True,
-)
+TRAIN = False
+if TRAIN == True:
+    es = EarlyStopping(
+        monitor="accuracy", verbose=1, patience=5, restore_best_weights=True
+    )
+    mc = ModelCheckpoint(
+        "best_modela.h5",
+        save_weights_only=True,
+        monitor="accuracy",
+        save_best_only=True,
+    )
 
-model.compile(optimizer=optimizer, loss=loss_function, metrics=[accuracy])
-EPOCHS = 20000
-model.fit(dataset, callbacks=[es, mc], epochs=EPOCHS)
+    model.compile(optimizer=optimizer, loss=loss_function, metrics=[accuracy])
+    EPOCHS = 20000
+    model.fit(dataset, callbacks=[es, mc], epochs=EPOCHS)
+else:
+    pass
 # %%
 modela = transformer(
     vocab_size=VOCAB_SIZE,
@@ -615,9 +609,6 @@ def predict(sentence):
     predicted_sentence = tokenizer.decode(
         [i for i in prediction if i < tokenizer.vocab_size]
     )
-
-    print("Input: {}".format(sentence))
-    print("Output: {}".format(predicted_sentence))
 
     return predicted_sentence
 

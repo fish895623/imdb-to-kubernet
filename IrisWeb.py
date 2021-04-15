@@ -4,7 +4,7 @@
 """
 # 모듈 로딩 ---------------------------------------------------
 import cgi, sys, codecs, os
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 
 file_name = "iris_model.h5"
 
