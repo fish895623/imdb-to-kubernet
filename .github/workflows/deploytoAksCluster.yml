@@ -74,10 +74,10 @@ jobs:
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
 
-#       - name: Save image to cache
-#         run: |
-#           mkdir -p ~/.cache/docker/
-#           docker save -o ~/.cache/docker/${IMAGE_NAME}.tar ${IMAGE_NAME}
+      - name: Save image to cache
+        run: |
+          mkdir -p ~/.cache/docker/
+          docker save -o ~/.cache/docker/${IMAGE_NAME}.tar ${IMAGE_NAME}
 
 
       - name: Log into registry
