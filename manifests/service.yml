@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    nodePort: 30083
+    nodePort: 30082
     protocol: TCP
     targetPort: 80
   selector:
@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: my-nginx
-        image: fish895623/imdb-to-kubernet/image:irisweb
+        image: fish895623/imdb-to-kubernet:irisweb
         imagePullPolicy: Always
         ports:
         - containerPort: 80
