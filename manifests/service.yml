@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: my-nginx
-        image: ghcr.io/imdb-to-kubernet/image:latest
+        image: ghcr.io/fish895623/imdb-to-kubernet/image:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
