@@ -1,6 +1,6 @@
 # %%
 import re
-import time
+import sys
 import urllib.request
 
 import numpy as np
@@ -551,7 +551,7 @@ if TRAIN == True:
         monitor="accuracy", verbose=1, patience=5, restore_best_weights=True
     )
     mc = ModelCheckpoint(
-        "best_modela.h5",
+        sys.argv[0] + "best_modela.h5",
         save_weights_only=True,
         monitor="accuracy",
         save_best_only=True,
