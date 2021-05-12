@@ -49,5 +49,12 @@ def transformer_post():
     return render_template("transformer.html", a0=a0, result=result)
 
 
+@app.route("/transformer/post", methods=["POST"])
+def transformer_POST_form():
+    sentence = str(request.form["sentence"])
+    run = predict(sentence)
+    return run
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="80")
+    app.run(host="0.0.0.0", port="5000")
