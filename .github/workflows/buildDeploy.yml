@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: fish895623/imdb-to-kubernet:latest,fish895623/imdb-to-kubernet:${{ github.run_number }}
+          tags: fish895623/imdb-to-kubernet:${{ github.run_number }},fish895623/imdb-to-kubernet:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
