@@ -1,7 +1,9 @@
 name: ci
 
 on:
-  tags: v*.*.*
+  create:
+    tags:
+      - v*
 
 jobs:
   docker:
