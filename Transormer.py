@@ -551,7 +551,7 @@ if TRAIN == True:
         monitor="accuracy", verbose=1, patience=5, restore_best_weights=True
     )
     mc = ModelCheckpoint(
-        "best_modela.h5",
+        "best_model.h5",
         save_weights_only=True,
         monitor="accuracy",
         save_best_only=True,
@@ -563,7 +563,7 @@ if TRAIN == True:
 else:
     pass
 # %%
-modela = transformer(
+model = transformer(
     vocab_size=VOCAB_SIZE,
     num_layers=NUM_LAYERS,
     dff=DFF,
@@ -571,7 +571,7 @@ modela = transformer(
     num_heads=NUM_HEADS,
     dropout=DROPOUT,
 )
-modela.load_weights("best_modela.h5")
+model.load_weights("best_model.h5")
 
 
 def evaluate(sentence):
@@ -585,7 +585,7 @@ def evaluate(sentence):
 
     # 디코더의 예측 시작
     for i in range(MAX_LENGTH):
-        predictions = modela(inputs=[sentence, output], training=False)
+        predictions = model(inputs=[sentence, output], training=False)
 
         # 현재(마지막) 시점의 예측 단어를 받아온다.
         predictions = predictions[:, -1:, :]
