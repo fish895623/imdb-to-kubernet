@@ -9,7 +9,7 @@ pipeline {
       // }
       agent any
       when {
-        expression { env.BRANCH_NAME =~ "master-patch-*" }
+        expression { env.BRANCH_NAME =~ "*-patch-*" }
       }
       steps {
         sh 'echo "Test Complete"'
