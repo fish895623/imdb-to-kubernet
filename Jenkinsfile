@@ -4,7 +4,7 @@ pipeline {
     stage("Test") {
       agent {
         dockerfile {
-          filename 'Dockerfile.dev'
+          filename 'jenkins/Dockerfile.test'
         }
       }
       when { branch pattern: "patch-*", comparator: "REGEXP" }
