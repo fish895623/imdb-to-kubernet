@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage("flake8") {
+    stage("pylint") {
       agent {
         dockerfile {
           filename 'jenkins/Dockerfile.test'
@@ -14,8 +14,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
-        sh 'pytest Testpytest.py'
-        // sh "pytest app.py"
+        sh 'pylint **/*.py'
       }
     }
   }

@@ -1,40 +1,50 @@
+# -*- coding: utf-8 -*-
+"""
+flask app
+"""
 from flask import Flask, render_template, request
 
-from Transformer import predict, transformer, model
-from Transformer import VOCAB_SIZE, NUM_LAYERS, DFF, D_MODEL, NUM_HEADS, DROPOUT
+from Transformer import predict, model
 
-model = transformer(
-    vocab_size=VOCAB_SIZE,
-    num_layers=NUM_LAYERS,
-    dff=DFF,
-    d_model=D_MODEL,
-    num_heads=NUM_HEADS,
-    dropout=DROPOUT,
-)
-model.load_weights("best_model.h5")
+app = Flask(__name__)
 
 
-def flask_app():
-    app = Flask(__name__)
+@app.route("/transformer")
+def transformer():
+    """
+    초기 html 로드
+    """
+    return render_template("transformer.html")
 
-    @app.route("/transformer")
-    def transformer():
-        return render_template("transformer.html")
 
-    @app.route("/transformer", methods=["POST"])
-    def transformer_post():
-        a0 = request.form["a0"]
-        result = predict(a0)
-        return render_template("transformer.html", a0=a0, result=result)
+@app.route("/transformer", methods=["POST"])
+def transformer_post():
+    """
+    POST data from `/transformer`
 
-    @app.route("/transformer/post", methods=["POST"])
-    def transformer_POST_form():
-        sentence = str(request.form["sentence"])
-        run = predict(sentence)
-        return run
+    param
+        sentence    (str)   : html에서 수신받은 입력값
+        result      (str)   : `predict(str(sentence))` transformer를 이용한 예측값
+    """
+    sentence = request.form["sentence"]
+    result = predict(sentence)
+    return render_template("transformer.html", sentence=sentence, result=result)
 
-    return app
+
+@app.route("/transformer/post", methods=["POST"])
+def transformer_post_form():
+    """
+    POST data from requested `/transformer/post`
+
+    param
+        sentence (str) : `sentence` 의 value값
+        run (str)      : `predict(str(sentence))` transformer를 이용한 예측값
+    """
+    sentence = str(request.form["sentence"])
+    run = predict(sentence)
+    return run
 
 
 if __name__ == "__main__":
-    flask_app().run(host="0.0.0.0", port="5000")
+    model.load_weights("best_model.h5")
+    app.run(host="0.0.0.0", port="5000")

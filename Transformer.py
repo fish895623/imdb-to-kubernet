@@ -1,14 +1,11 @@
 # %%
 import re
-import sys
 import urllib.request
 
 import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.python.keras.saving import model_config
-from tensorflow.python.keras.saving.save import load_model
 import tensorflow_datasets as tfds
 
 
@@ -54,6 +51,7 @@ class PositionalEncoding(tf.keras.layers.Layer):
 
 # %%
 sample_pos_encoding = PositionalEncoding(50, 128)
+
 
 # %%
 def scaled_dot_product_attention(query, key, value, mask):
@@ -102,6 +100,8 @@ temp_q = tf.constant([[0, 0, 10], [0, 10, 0], [10, 10, 0]], dtype=tf.float32)  #
 temp_out, temp_attn = scaled_dot_product_attention(temp_q, temp_k, temp_v, None)
 print(temp_attn)  # 어텐션 분포(어텐션 가중치의 나열)
 print(temp_out)  # 어텐션 값
+
+
 # %%
 class MultiHeadAttention(tf.keras.layers.Layer):
     def __init__(self, d_model, num_heads, name="multi_head_attention"):
@@ -179,6 +179,8 @@ def create_padding_mask(x):
 
 
 print(create_padding_mask(tf.constant([[1, 21, 777, 0, 0]])))
+
+
 # %%
 def encoder_layer(dff, d_model, num_heads, dropout, name="encoder_layer"):
     inputs = tf.keras.Input(shape=(None, d_model), name="inputs")
@@ -464,6 +466,7 @@ VOCAB_SIZE = tokenizer.vocab_size + 2
 # 최대 길이를 40으로 정의
 MAX_LENGTH = 40
 
+
 # 토큰화 / 정수 인코딩 / 시작 토큰과 종료 토큰 추가 / 패딩
 def tokenize_and_filter(inputs, outputs):
     tokenized_inputs, tokenized_outputs = [], []
@@ -546,7 +549,7 @@ def accuracy(y_true, y_pred):
 
 
 TRAIN = False
-if TRAIN == True:
+if TRAIN is True:
     es = EarlyStopping(
         monitor="accuracy", verbose=1, patience=5, restore_best_weights=True
     )
