@@ -12,6 +12,7 @@ pipeline {
       }
       steps {
         sh "pytest Transormer.py"
+        sh "which python3"
       }
     }
   }
