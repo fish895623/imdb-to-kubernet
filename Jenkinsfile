@@ -13,6 +13,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
+        sh 'python3 Transformer.py'
         // sh "pytest app.py"
       }
     }
