@@ -1,13 +1,13 @@
-# %%
+#
+"""transformer module."""
 import re
 import urllib.request
 
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import tensorflow_datasets as tfds
-
 
 # %%
 class PositionalEncoding(tf.keras.layers.Layer):
@@ -604,6 +604,8 @@ def evaluate(sentence):
 
     return tf.squeeze(output, axis=0)
 
+
+# %%
 
 # %%
 def predict(sentence):

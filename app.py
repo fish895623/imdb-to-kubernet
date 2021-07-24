@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-flask app
-"""
+"""flask app."""
 from flask import Flask, render_template, request
 
 from transformer import predict, model
@@ -11,16 +9,14 @@ app = Flask(__name__)
 
 @app.route("/transformer")
 def transformer():
-    """
-    초기 html 로드
-    """
+    """초기 html 로드."""
     return render_template("transformer.html")
 
 
 @app.route("/transformer", methods=["POST"])
 def transformer_post():
     """
-    POST data from `/transformer`
+    POST data from sites.
 
     param
         sentence    (str)   : html에서 수신받은 입력값
@@ -34,7 +30,7 @@ def transformer_post():
 @app.route("/transformer/post", methods=["POST"])
 def transformer_post_form():
     """
-    POST data from requested `/transformer/post`
+    POST data from requested.
 
     param
         sentence (str) : `sentence` 의 value값

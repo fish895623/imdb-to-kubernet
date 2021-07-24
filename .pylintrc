@@ -1,2 +1,4 @@
 [MESSAGES CONTROL]
 disable=R0913
+[TYPECHECK]
+ignored-modules=tensorflow
