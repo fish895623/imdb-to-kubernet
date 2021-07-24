@@ -7,7 +7,7 @@ pipeline {
           filename 'jenkins/Dockerfile.test'
         }
       }
-      when { branch pattern: "patch-*", comparator: "REGEXP" }
+      when { branch pattern: "*-patch-*", comparator: "REGEXP" }
       steps {
         sh 'echo "Test Complete"'
       }
