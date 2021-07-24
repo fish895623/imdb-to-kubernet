@@ -3,9 +3,10 @@ pipeline {
   stages {
     stage("Test") {
       agent {
-        docker { dockerfile Dockerfile.dev }
+        dockerfile
+        filename 'Dockerfile.dev'
       }
-      steps {
+    steps {
         sh 'echo "Test Complete"'
       }
     }
