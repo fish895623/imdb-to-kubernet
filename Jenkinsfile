@@ -7,11 +7,7 @@ pipeline {
           filename 'Dockerfile.dev'
         }
       }
-      when {
-        allOf{
-          expression{env.BRANCH_NAME =~ /+patch+/}
-        }
-      }
+      when { branch pattern: "patch-*", comparator: "REGEXP" }
       steps {
         sh 'echo "Test Complete"'
       }
