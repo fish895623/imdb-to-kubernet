@@ -3,3 +3,4 @@ tensorflow
 pandas
 tensorflow-datasets
 pytest
+pytest-flask

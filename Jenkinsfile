@@ -13,7 +13,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
-        sh 'python3 app.py -s /dev/null'
+        sh 'pytest'
         // sh "pytest app.py"
       }
     }
