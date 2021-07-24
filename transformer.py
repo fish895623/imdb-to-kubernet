@@ -11,6 +11,8 @@ import tensorflow_datasets as tfds
 
 # %%
 class PositionalEncoding(tf.keras.layers.Layer):
+    """포지셔널 인코딩."""
+
     def __init__(
         self,
         position,
