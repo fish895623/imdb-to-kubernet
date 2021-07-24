@@ -7,7 +7,6 @@ pipeline {
           filename 'jenkins/Dockerfile.test'
         }
       }
-      agent any
       when {
         expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
       }
