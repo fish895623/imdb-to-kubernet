@@ -621,6 +621,5 @@ def preprocess_sentence(sentence):
 
 
 # %%
-predict("12시 땡!")
-
+pppprr("asdf")
 # %%
