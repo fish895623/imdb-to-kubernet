@@ -2,8 +2,11 @@ pipeline {
   agent any
   stages {
     stage("Test") {
+      agent {
+        docker { dockerfile Dockerfile.dev }
+      }
       steps {
-        echo "Test Complete"
+        sh 'echo "Test Complete"'
       }
     }
   }
