@@ -11,7 +11,7 @@ pipeline {
         expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
       }
       steps {
-        sh "pytest"
+        sh "pytest Transormer.py"
       }
     }
   }
