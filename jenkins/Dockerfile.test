@@ -5,3 +5,4 @@ RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.test.txt
 COPY . /workspace/
 
 WORKDIR /workspace/
+ENTRYPOINT ["pytest"]
