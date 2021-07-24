@@ -12,7 +12,7 @@ pipeline {
         expression { env.BRANCH_NAME =~ "PR-*" }
       }
       steps {
-        echo env.BRANCH_NAME
+        // echo env.BRANCH_NAME
         sh "pytest app.py"
       }
     }
