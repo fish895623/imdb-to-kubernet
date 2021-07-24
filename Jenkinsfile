@@ -14,7 +14,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
-        sh "./jenkins/launch.sh pylint"
+        sh "sh jenkins/launch.sh pylint"
       }
     }
   }
