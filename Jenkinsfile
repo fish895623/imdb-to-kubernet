@@ -7,9 +7,10 @@ pipeline {
           filename 'jenkins/Dockerfile.test'
         }
       }
-      // when {
-      //   expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
-      // }
+      when {
+        // expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
+        expression { env.BRANCH_NAME =~ "PR-\d" }
+      }
       steps {
         echo env.BRANCH_NAME
         sh "pytest app.py"
