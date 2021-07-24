@@ -9,7 +9,7 @@ pipeline {
       }
       when {
         // expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
-        expression { env.BRANCH_NAME =~ "PR-\d" }
+        expression { env.BRANCH_NAME =~ "PR-*" }
       }
       steps {
         echo env.BRANCH_NAME
