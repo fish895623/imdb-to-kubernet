@@ -6,4 +6,4 @@ COPY . /workspace/
 
 WORKDIR /workspace/
 
-ENTRYPOINT ["python3", "-m", "pytest"]
+ENTRYPOINT python3 -m pytest
