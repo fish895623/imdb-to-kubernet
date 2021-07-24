@@ -13,7 +13,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
-        // sh 'pytest'
+        sh 'pytest'
         // sh "pytest app.py"
       }
     }
