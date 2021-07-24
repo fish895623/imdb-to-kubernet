@@ -11,8 +11,7 @@ pipeline {
         expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
       }
       steps {
-        sh 'echo "Test Complete"'
-        echo env.BRANCH_NAME
+        sh "pytest"
       }
     }
   }
