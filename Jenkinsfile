@@ -13,7 +13,6 @@ pipeline {
         expression { env.BRANCH_NAME =~ "PR-*" }
       }
       steps {
-        echo env.BRANCH_NAME
         sh "sh jenkins/launch.sh pylint"
       }
     }

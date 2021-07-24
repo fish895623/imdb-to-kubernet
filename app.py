@@ -4,7 +4,7 @@ flask app
 """
 from flask import Flask, render_template, request
 
-from Transformer import predict, model
+from transformer import predict, model
 
 app = Flask(__name__)
 
