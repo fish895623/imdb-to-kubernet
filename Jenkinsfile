@@ -14,7 +14,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
-        sh 'pylint **/*.py'
+        sh 'find . -type f -name "*.py" -exec python3 -m pylint {} \;'
       }
     }
   }
