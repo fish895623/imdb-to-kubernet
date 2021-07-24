@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 
-from Transormer import predict, transformer, model
-from Transormer import VOCAB_SIZE, NUM_LAYERS, DFF, D_MODEL, NUM_HEADS, DROPOUT
+from Transformer import predict, transformer, model
+from Transformer import VOCAB_SIZE, NUM_LAYERS, DFF, D_MODEL, NUM_HEADS, DROPOUT
 
 model = transformer(
     vocab_size=VOCAB_SIZE,
