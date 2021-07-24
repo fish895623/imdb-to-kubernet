@@ -1,0 +1,9 @@
+FROM python:3.7-buster
+
+COPY ./jenkins/requirements.test.txt /tmp/requirements.test.txt
+RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.test.txt
+COPY . /workspace/
+
+WORKDIR /workspace/
+
+ENTRYPOINT ["python3", "-m", "pytest"]
