@@ -14,7 +14,7 @@ pipeline {
       }
       steps {
         echo env.BRANCH_NAME
-        sh "find . -type f -name '*.py' -exec python3 -m pylint {} \;"
+        sh "./jenkins/launch.sh pylint"
       }
     }
   }
