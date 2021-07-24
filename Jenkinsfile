@@ -7,7 +7,7 @@ pipeline {
           filename 'jenkins/Dockerfile.test'
         }
       }
-      when { branch pattern: "/[a-z]{3,6}/", comparator: "REGEXP" }
+      when { branch pattern: "/develop-patch-\d{0,}-\d{0,}/", comparator: "REGEXP" }
       steps {
         sh 'echo "Test Complete"'
         echo env.BRANCH_NAME
