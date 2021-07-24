@@ -6,7 +6,7 @@ import urllib.request
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint # python No Module in LazyLoader
 import tensorflow_datasets as tfds
 
 # %%
