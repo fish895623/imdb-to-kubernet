@@ -5,6 +5,7 @@ pipeline {
       agent {
         dockerfile {
           filename 'jenkins/Dockerfile.test'
+          reuseNode true
         }
       }
       when {
