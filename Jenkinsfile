@@ -8,7 +8,7 @@ pipeline {
         }
       }
       when {
-        expression { env.BRANCH_NAME =~ "/develop-patch-\d{0,}-\d{0,}/" }
+        expression { env.BRANCH_NAME =~ "develop-patch-*" }
       }
       steps {
         sh 'echo "Test Complete"'
