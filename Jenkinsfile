@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage("pytest") {
+    stage("flake8") {
       agent {
         dockerfile {
           filename 'jenkins/Dockerfile.test'
