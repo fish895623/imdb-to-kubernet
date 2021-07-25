@@ -2,45 +2,56 @@
 """flask app."""
 from flask import Flask, render_template, request
 
-from transformer import predict, model
+from transformer import model, predict
 
 app = Flask(__name__)
 
 
-@app.route("/transformer")
+@app.route('/transformer')
 def transformer():
-    """초기 html 로드."""
-    return render_template("transformer.html")
+    """
+    초기 html 로드.
+
+    Returns:
+        rendering html using flask
+    """
+    return render_template('transformer.html')
 
 
-@app.route("/transformer", methods=["POST"])
+@app.route('/transformer', methods=['POST'])
 def transformer_post():
     """
     POST data from sites.
 
-    param
+    args:
         sentence    (str)   : html에서 수신받은 입력값
         result      (str)   : `predict(str(sentence))` transformer를 이용한 예측값
+
+    Returns:
+        render html using flask
     """
-    sentence = request.form["sentence"]
-    result = predict(sentence)
-    return render_template("transformer.html", sentence=sentence, result=result)
+    sentence = request.form['sentence']
+    result_predict = predict(request.form['sentence'])
+    return render_template('transformer.html', sentence=sentence, result=result_predict)
 
 
-@app.route("/transformer/post", methods=["POST"])
+@app.route('/transformer/post', methods=['POST'])
 def transformer_post_form():
     """
     POST data from requested.
 
-    param
+    args
         sentence (str) : `sentence` 의 value값
         run (str)      : `predict(str(sentence))` transformer를 이용한 예측값
+
+    Returns:
+        트랜스포머 모델로 출력
     """
-    sentence = str(request.form["sentence"])
-    run = predict(sentence)
-    return run
+    sentence = str(request.form['sentence'])
+
+    return predict(sentence)
 
 
-if __name__ == "__main__":
-    model.load_weights("best_model.h5")
-    app.run(host="0.0.0.0", port="5000")
+if __name__ == '__main__':
+    model.load_weights('best_model.h5')
+    app.run(host='127.0.0.1', port='5000')

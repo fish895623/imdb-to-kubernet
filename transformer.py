@@ -1,4 +1,4 @@
-#
+# -*- coding: utf-8 -*-
 """transformer module."""
 import re
 import urllib.request
@@ -6,10 +6,13 @@ import urllib.request
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint # python No Module in LazyLoader
+# python No Module in LazyLoader
+from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
 import tensorflow_datasets as tfds
 
 # %%
+
+
 class PositionalEncoding(tf.keras.layers.Layer):
     """포지셔널 인코딩."""
 
@@ -22,7 +25,8 @@ class PositionalEncoding(tf.keras.layers.Layer):
         self.pos_encoding = self.positional_encoding(position, d_model)
 
     def get_angles(self, position, i, d_model):
-        angles = 1 / tf.pow(10000, (2 * (i // 2)) / tf.cast(d_model, tf.float32))
+        angles = 1 / tf.pow(10000, (2 * (i // 2)) /
+                            tf.cast(d_model, tf.float32))
         return position * angles
 
     def positional_encoding(self, position, d_model):
@@ -91,15 +95,19 @@ temp_k = tf.constant(
     [[10, 0, 0], [0, 10, 0], [0, 0, 10], [0, 0, 10]], dtype=tf.float32
 )  # (4, 3)
 
-temp_v = tf.constant([[1, 0], [10, 0], [100, 5], [1000, 6]], dtype=tf.float32)  # (4, 2)
+temp_v = tf.constant([[1, 0], [10, 0], [100, 5], [1000, 6]],
+                     dtype=tf.float32)  # (4, 2)
 temp_q = tf.constant([[0, 10, 0]], dtype=tf.float32)  # (1, 3)
 # %%
-temp_out, temp_attn = scaled_dot_product_attention(temp_q, temp_k, temp_v, None)
+temp_out, temp_attn = scaled_dot_product_attention(
+    temp_q, temp_k, temp_v, None)
 print(temp_attn)  # 어텐션 분포(어텐션 가중치의 나열)
 print(temp_out)  # 어텐션 값
 # %%
-temp_q = tf.constant([[0, 0, 10], [0, 10, 0], [10, 10, 0]], dtype=tf.float32)  # (3, 3)
-temp_out, temp_attn = scaled_dot_product_attention(temp_q, temp_k, temp_v, None)
+temp_q = tf.constant([[0, 0, 10], [0, 10, 0], [10, 10, 0]],
+                     dtype=tf.float32)  # (3, 3)
+temp_out, temp_attn = scaled_dot_product_attention(
+    temp_q, temp_k, temp_v, None)
 print(temp_attn)  # 어텐션 분포(어텐션 가중치의 나열)
 print(temp_out)  # 어텐션 값
 
@@ -127,7 +135,8 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
     # num_heads 개수만큼 q, k, v를 split하는 함수
     def split_heads(self, inputs, batch_size):
-        inputs = tf.reshape(inputs, shape=(batch_size, -1, self.num_heads, self.depth))
+        inputs = tf.reshape(inputs, shape=(
+            batch_size, -1, self.num_heads, self.depth))
         return tf.transpose(inputs, perm=[0, 2, 1, 3])
 
     def call(self, inputs):
@@ -158,13 +167,15 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
         # 3. 스케일드 닷 프로덕트 어텐션. 앞서 구현한 함수 사용.
         # (batch_size, num_heads, query의 문장 길이, d_model/num_heads)
-        scaled_attention, _ = scaled_dot_product_attention(query, key, value, mask)
+        scaled_attention, _ = scaled_dot_product_attention(
+            query, key, value, mask)
         # (batch_size, query의 문장 길이, num_heads, d_model/num_heads)
         scaled_attention = tf.transpose(scaled_attention, perm=[0, 2, 1, 3])
 
         # 4. 헤드 연결(concatenate)하기
         # (batch_size, query의 문장 길이, d_model)
-        concat_attention = tf.reshape(scaled_attention, (batch_size, -1, self.d_model))
+        concat_attention = tf.reshape(
+            scaled_attention, (batch_size, -1, self.d_model))
 
         # 5. WO에 해당하는 밀집층 지나기
         # (batch_size, query의 문장 길이, d_model)
@@ -202,7 +213,8 @@ def encoder_layer(dff, d_model, num_heads, dropout, name="encoder_layer"):
 
     # 드롭아웃 + 잔차 연결과 층 정규화
     attention = tf.keras.layers.Dropout(rate=dropout)(attention)
-    attention = tf.keras.layers.LayerNormalization(epsilon=1e-6)(inputs + attention)
+    attention = tf.keras.layers.LayerNormalization(
+        epsilon=1e-6)(inputs + attention)
 
     # 포지션 와이즈 피드 포워드 신경망 (두번째 서브층)
     outputs = tf.keras.layers.Dense(units=dff, activation="relu")(attention)
@@ -210,7 +222,8 @@ def encoder_layer(dff, d_model, num_heads, dropout, name="encoder_layer"):
 
     # 드롭아웃 + 잔차 연결과 층 정규화
     outputs = tf.keras.layers.Dropout(rate=dropout)(outputs)
-    outputs = tf.keras.layers.LayerNormalization(epsilon=1e-6)(attention + outputs)
+    outputs = tf.keras.layers.LayerNormalization(
+        epsilon=1e-6)(attention + outputs)
 
     return tf.keras.Model(inputs=[inputs, padding_mask], outputs=outputs, name=name)
 
@@ -244,7 +257,8 @@ def encoder(vocab_size, num_layers, dff, d_model, num_heads, dropout, name="enco
 # %%
 def create_look_ahead_mask(x):
     seq_len = tf.shape(x)[1]
-    look_ahead_mask = 1 - tf.linalg.band_part(tf.ones((seq_len, seq_len)), -1, 0)
+    look_ahead_mask = 1 - \
+        tf.linalg.band_part(tf.ones((seq_len, seq_len)), -1, 0)
     padding_mask = create_padding_mask(x)  # 패딩 마스크도 포함
     return tf.maximum(look_ahead_mask, padding_mask)
 
@@ -255,7 +269,8 @@ def decoder_layer(dff, d_model, num_heads, dropout, name="decoder_layer"):
     enc_outputs = tf.keras.Input(shape=(None, d_model), name="encoder_outputs")
 
     # 룩어헤드 마스크(첫번째 서브층)
-    look_ahead_mask = tf.keras.Input(shape=(1, None, None), name="look_ahead_mask")
+    look_ahead_mask = tf.keras.Input(
+        shape=(1, None, None), name="look_ahead_mask")
 
     # 패딩 마스크(두번째 서브층)
     padding_mask = tf.keras.Input(shape=(1, 1, None), name="padding_mask")
@@ -271,7 +286,8 @@ def decoder_layer(dff, d_model, num_heads, dropout, name="decoder_layer"):
     )
 
     # 잔차 연결과 층 정규화
-    attention1 = tf.keras.layers.LayerNormalization(epsilon=1e-6)(attention1 + inputs)
+    attention1 = tf.keras.layers.LayerNormalization(
+        epsilon=1e-6)(attention1 + inputs)
 
     # 멀티-헤드 어텐션 (두번째 서브층 / 디코더-인코더 어텐션)
     attention2 = MultiHeadAttention(d_model, num_heads, name="attention_2")(
@@ -295,7 +311,8 @@ def decoder_layer(dff, d_model, num_heads, dropout, name="decoder_layer"):
 
     # 드롭아웃 + 잔차 연결과 층 정규화
     outputs = tf.keras.layers.Dropout(rate=dropout)(outputs)
-    outputs = tf.keras.layers.LayerNormalization(epsilon=1e-6)(outputs + attention2)
+    outputs = tf.keras.layers.LayerNormalization(
+        epsilon=1e-6)(outputs + attention2)
 
     return tf.keras.Model(
         inputs=[inputs, enc_outputs, look_ahead_mask, padding_mask],
@@ -310,7 +327,8 @@ def decoder(vocab_size, num_layers, dff, d_model, num_heads, dropout, name="deco
     enc_outputs = tf.keras.Input(shape=(None, d_model), name="encoder_outputs")
 
     # 디코더는 룩어헤드 마스크(첫번째 서브층)와 패딩 마스크(두번째 서브층) 둘 다 사용.
-    look_ahead_mask = tf.keras.Input(shape=(1, None, None), name="look_ahead_mask")
+    look_ahead_mask = tf.keras.Input(
+        shape=(1, None, None), name="look_ahead_mask")
     padding_mask = tf.keras.Input(shape=(1, 1, None), name="padding_mask")
 
     # 포지셔널 인코딩 + 드롭아웃
@@ -384,7 +402,8 @@ def transformer(
     )(inputs=[dec_inputs, enc_outputs, look_ahead_mask, dec_padding_mask])
 
     # 다음 단어 예측을 위한 출력층
-    outputs = tf.keras.layers.Dense(units=vocab_size, name="outputs")(dec_outputs)
+    outputs = tf.keras.layers.Dense(
+        units=vocab_size, name="outputs")(dec_outputs)
 
     return tf.keras.Model(inputs=[inputs, dec_inputs], outputs=outputs, name=name)
 
@@ -620,7 +639,6 @@ def predict(sentence):
     return predicted_sentence
 
 
-# %%
 def preprocess_sentence(sentence):
     sentence = re.sub(r"([?.!,])", r" \1 ", sentence)
     sentence = sentence.strip()
