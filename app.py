@@ -7,7 +7,7 @@ from transformer import model, predict
 app = Flask(__name__)
 
 
-@app.route('/transformer')
+@app.route("/transformer")
 def transformer():
     """
     초기 html 로드.
@@ -15,10 +15,10 @@ def transformer():
     Returns:
         rendering html using flask
     """
-    return render_template('transformer.html')
+    return render_template("transformer.html")
 
 
-@app.route('/transformer', methods=['POST'])
+@app.route("/transformer", methods=["POST"])
 def transformer_post():
     """
     POST data from sites.
@@ -30,12 +30,12 @@ def transformer_post():
     Returns:
         render html using flask
     """
-    sentence = request.form['sentence']
-    result_predict = predict(request.form['sentence'])
-    return render_template('transformer.html', sentence=sentence, result=result_predict)
+    sentence = request.form["sentence"]
+    result_predict = predict(request.form["sentence"])
+    return render_template("transformer.html", sentence=sentence, result=result_predict)
 
 
-@app.route('/transformer/post', methods=['POST'])
+@app.route("/transformer/post", methods=["POST"])
 def transformer_post_form():
     """
     POST data from requested.
@@ -47,11 +47,11 @@ def transformer_post_form():
     Returns:
         트랜스포머 모델로 출력
     """
-    sentence = str(request.form['sentence'])
+    sentence = str(request.form["sentence"])
 
     return predict(sentence)
 
 
-if __name__ == '__main__':
-    model.load_weights('best_model.h5')
-    app.run(host='127.0.0.1', port='5000')
+if __name__ == "__main__":
+    model.load_weights("best_model.h5")
+    app.run(host="127.0.0.1", port="5000")
