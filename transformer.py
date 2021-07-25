@@ -6,11 +6,9 @@ import urllib.request
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+import tensorflow_datasets as tfds
 # python No Module in LazyLoader
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
-import tensorflow_datasets as tfds
-
-# %%
 
 
 class PositionalEncoding(tf.keras.layers.Layer):
@@ -264,13 +262,13 @@ def create_look_ahead_mask(x):
 
 
 # %%
-def decoder_layer(dff, d_model, num_heads, dropout, name="decoder_layer"):
-    inputs = tf.keras.Input(shape=(None, d_model), name="inputs")
-    enc_outputs = tf.keras.Input(shape=(None, d_model), name="encoder_outputs")
+def decoder_layer(dff, d_model, num_heads, dropout, name='decoder_layer'):
+    inputs = tf.keras.Input(shape=(None, d_model), name='inputs')
+    enc_outputs = tf.keras.Input(shape=(None, d_model), name='encoder_outputs')
 
     # 룩어헤드 마스크(첫번째 서브층)
     look_ahead_mask = tf.keras.Input(
-        shape=(1, None, None), name="look_ahead_mask")
+        shape=(1, None, None), name='look_ahead_mask')
 
     # 패딩 마스크(두번째 서브층)
     padding_mask = tf.keras.Input(shape=(1, 1, None), name="padding_mask")
