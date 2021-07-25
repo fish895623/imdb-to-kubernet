@@ -42,7 +42,7 @@ class PositionalEncoding(tf.keras.layers.Layer):
         pos_encoding = tf.constant(angle_rads)
         pos_encoding = pos_encoding[tf.newaxis, ...]
 
-        print(pos_encoding.shape)
+        assert pos_encoding.shape != None, "Error with Positional Encoding"
         return tf.cast(pos_encoding, tf.float32)
 
     def call(self, inputs):
