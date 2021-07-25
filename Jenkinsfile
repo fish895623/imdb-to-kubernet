@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage("pylint") {
+    stage("lint") {
       agent {
         dockerfile {
           filename 'jenkins/Dockerfile.test'
@@ -10,7 +10,8 @@ pipeline {
       }
       when {
         // expression { env.BRANCH_NAME =~ "(.*)-patch-*" }
-        expression { env.BRANCH_NAME =~ "PR-*" }
+        // expression { env.BRANCH_NAME =~ "PR-*" }
+        changeset pattern: "*.py"
       }
       steps {
         sh "sh jenkins/launch.sh lint bandit"
