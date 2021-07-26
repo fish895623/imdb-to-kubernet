@@ -1,50 +1,35 @@
-# -*- coding: utf-8 -*-
-"""
-flask app
-"""
-from flask import Flask, render_template, request
+#!/usr/bin/env python3
+from flask import Flask, request, jsonify, render_template
 
-from Transformer import predict, model
 
 app = Flask(__name__)
 
 
-@app.route("/transformer")
-def transformer():
-    """
-    초기 html 로드
-    """
-    return render_template("transformer.html")
+@app.route("/")
+def aaaa():
+    return render_template("index.html")
 
 
-@app.route("/transformer", methods=["POST"])
-def transformer_post():
-    """
-    POST data from `/transformer`
-
-    param
-        sentence    (str)   : html에서 수신받은 입력값
-        result      (str)   : `predict(str(sentence))` transformer를 이용한 예측값
-    """
-    sentence = request.form["sentence"]
-    result = predict(sentence)
-    return render_template("transformer.html", sentence=sentence, result=result)
+@app.route("/api", methods=["POST", "GET"])
+def my_form_post():
+    json_data = request.json
+    print(json_data["a_key"])
+    return jsonify(json_data)
 
 
-@app.route("/transformer/post", methods=["POST"])
-def transformer_post_form():
-    """
-    POST data from requested `/transformer/post`
+@app.route("/test")
+def imdb():
+    value = ""
+    return render_template("imdb.html", value=value)
 
-    param
-        sentence (str) : `sentence` 의 value값
-        run (str)      : `predict(str(sentence))` transformer를 이용한 예측값
-    """
-    sentence = str(request.form["sentence"])
-    run = predict(sentence)
-    return run
+
+@app.route("/test", methods=["POST"])
+def imdb_post():
+    a0 = request.form["a0"]
+    a1 = request.form["a1"]
+    result = int(a0) + int(a1)
+    return render_template("imdb.html", result=result, a0=a0, a1=a1)
 
 
 if __name__ == "__main__":
-    model.load_weights("best_model.h5")
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="localhost", port="8080")
