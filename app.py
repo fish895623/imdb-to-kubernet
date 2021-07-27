@@ -4,15 +4,6 @@ from flask import Flask, render_template, request
 
 from transformer import model, predict
 
-model = transformer(
-    vocab_size=VOCAB_SIZE,
-    num_layers=NUM_LAYERS,
-    dff=DFF,
-    d_model=D_MODEL,
-    num_heads=NUM_HEADS,
-    dropout=DROPOUT,
-)
-model.load_weights("best_modela.h5")
 
 app = Flask(__name__)
 

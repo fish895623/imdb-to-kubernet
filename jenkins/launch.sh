@@ -1,6 +1,6 @@
 case $1 in
-    pylint)
-        find . -type f -name '*.py' -exec python3 -m pylint {} \;
+    lint)
+        find . -type f -name '*.py' -exec python3 -m $2 {} \;
         ;;
     *)
         echo -n "UNKNOWN"
