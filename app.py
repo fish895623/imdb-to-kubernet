@@ -1,18 +1,7 @@
 from flask import Flask, render_template, request
 
-from IrisWeb import detect_iris
-from Transormer import predict, transformer
-from Transormer import VOCAB_SIZE, NUM_LAYERS, DFF, D_MODEL, NUM_HEADS, DROPOUT
+from transformer import predict, transformer, model
 
-model = transformer(
-    vocab_size=VOCAB_SIZE,
-    num_layers=NUM_LAYERS,
-    dff=DFF,
-    d_model=D_MODEL,
-    num_heads=NUM_HEADS,
-    dropout=DROPOUT,
-)
-model.load_weights("best_modela.h5")
 
 app = Flask(__name__)
 
@@ -57,4 +46,5 @@ def transformer_POST_form():
 
 
 if __name__ == "__main__":
+    model.load_weights("best_model.h5")
     app.run(host="0.0.0.0", port="5000")
