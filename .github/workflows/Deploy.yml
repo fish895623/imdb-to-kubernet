@@ -55,7 +55,6 @@ jobs:
   deploy:
     needs: push
     runs-on: ubuntu-latest
-    if: github.event_name == 'deploy'
     steps:
       - name: deploy to cluster
         uses: steebchen/kubectl@master
