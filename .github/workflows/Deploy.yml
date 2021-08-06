@@ -43,7 +43,7 @@ jobs:
 
       - name: Build & Push image
         run: |
-          export TAG=$GITHUB_RUN_NUMBER
+          export TAG=$GITHUB_SHA
           docker-compose build && docker-compose push
 
   deploy:
