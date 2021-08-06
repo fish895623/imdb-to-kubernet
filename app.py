@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""flask app."""
 from flask import Flask, render_template, request
 
 from transformer import model, predict, transformer
@@ -5,23 +7,48 @@ from transformer import model, predict, transformer
 app = Flask(__name__)
 
 
-@app.route("/transformer")
+@app.route("/transformer", methods=["GET"])
 def transformer():
+    """
+    초기 html 로드.
+
+    Returns:
+        rendering html using flask
+    """
     return render_template("transformer.html")
 
 
 @app.route("/transformer", methods=["POST"])
 def transformer_post():
-    a0 = request.form["a0"]
-    result = predict(a0)
-    return render_template("transformer.html", a0=a0, result=result)
+    """
+    POST data from sites.
 
+    args:
+        sentence    (str)   : html에서 수신받은 입력값
+        result      (str)   : `predict(str(sentence))` transformer를 이용한 예측값
+
+    Returns:
+        render html using flask
+    """
+    sentence = request.form["sentence"]
+    result_predict = predict(request.form["sentence"])
+    return render_template("transformer.html", sentence=sentence, result=result_predict)
 
 @app.route("/transformer/post", methods=["POST"])
-def transformer_POST_form():
+def transformer_post_form():
+    """
+    POST data from requested.
+
+    args
+        sentence (str) : `sentence` 의 value값
+        run (str)      : `predict(str(sentence))` transformer를 이용한 예측값
+
+    Returns:
+        트랜스포머 모델로 출력
+    """
     sentence = str(request.form["sentence"])
-    run = predict(sentence)
-    return run
+
+    return predict(sentence)
 
 
 if __name__ == "__main__":

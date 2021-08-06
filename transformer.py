@@ -1,6 +1,6 @@
-# %%
+# -*- coding: utf-8 -*-
+"""transformer module."""
 import re
-import sys
 import urllib.request
 
 import numpy as np
@@ -546,7 +546,7 @@ def accuracy(y_true, y_pred):
 
 
 TRAIN = False
-if TRAIN == True:
+if TRAIN is True:
     es = EarlyStopping(
         monitor="accuracy", verbose=1, patience=5, restore_best_weights=True
     )

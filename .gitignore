@@ -3,3 +3,5 @@ __pycache__/
 .idea/
 .vscode/
 .devcontainers/
+.pytest_cache/
+.mypy_cache/
