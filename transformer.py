@@ -551,7 +551,7 @@ if TRAIN == True:
         monitor="accuracy", verbose=1, patience=5, restore_best_weights=True
     )
     mc = ModelCheckpoint(
-        "best_modela.h5",
+        "best_model.h5",
         save_weights_only=True,
         monitor="accuracy",
         save_best_only=True,
@@ -563,7 +563,7 @@ if TRAIN == True:
 else:
     pass
 # %%
-modela = transformer(
+model = transformer(
     vocab_size=VOCAB_SIZE,
     num_layers=NUM_LAYERS,
     dff=DFF,
@@ -571,7 +571,7 @@ modela = transformer(
     num_heads=NUM_HEADS,
     dropout=DROPOUT,
 )
-modela.load_weights("best_modela.h5")
+model.load_weights("best_model.h5")
 
 
 def evaluate(sentence):
@@ -585,7 +585,7 @@ def evaluate(sentence):
 
     # 디코더의 예측 시작
     for i in range(MAX_LENGTH):
-        predictions = modela(inputs=[sentence, output], training=False)
+        predictions = model(inputs=[sentence, output], training=False)
 
         # 현재(마지막) 시점의 예측 단어를 받아온다.
         predictions = predictions[:, -1:, :]
@@ -596,7 +596,7 @@ def evaluate(sentence):
             break
 
         # 마지막 시점의 예측 단어를 출력에 연결한다.
-        # 이는 for문을 통해서 디코더의 입력으로 사용될 예정이다.
+        # 이는 for 문을 통해서 디코더의 입력으로 사용될 예정이다.
         output = tf.concat([output, predicted_id], axis=-1)
 
     return tf.squeeze(output, axis=0)
@@ -613,14 +613,7 @@ def predict(sentence):
     return predicted_sentence
 
 
-# %%
 def preprocess_sentence(sentence):
     sentence = re.sub(r"([?.!,])", r" \1 ", sentence)
     sentence = sentence.strip()
     return sentence
-
-
-# %%
-predict("12시 땡!")
-
-# %%
