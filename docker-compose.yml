@@ -12,7 +12,3 @@ services:
   build_version_tag:
     extends: app
     image: fish895623/imdb-to-kubernet:${TAG}
-  build_version_ref:
-    extends: app
-    image: fish895623/imdb-to-kubernet:${REF}
-

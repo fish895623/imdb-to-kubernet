@@ -45,13 +45,18 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_HUB }}" | docker login -u ${{ github.actor }} --password-stdin
 
-      - name: Set Image tass
+      - name: Set Image tags
         run: |
-          ${{ GITHUB_RUN_NUMBER }}
+          export TAG=$GITHUB_RUN_NUMBER
 
       - name: Build & Push image
         run: docker-compose build && docker-compose push
 
+  deploy:
+    needs: push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'deploy'
+    steps:
       - name: deploy to cluster
         uses: steebchen/kubectl@master
         env:
