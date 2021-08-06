@@ -1,6 +1,9 @@
 name: Docker
 
 on:
+  push:
+    branches: 
+    - "*"
   create:
     tags:
       - v*
@@ -9,7 +12,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-  steps:
+    steps:
     - uses: actions/checkout@v2
 
     - name: Run tests
