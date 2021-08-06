@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 
-from transformer import predict, transformer, model
-
+from transformer import model, predict, transformer
 
 app = Flask(__name__)
 
