@@ -1,1 +1,10 @@
+name: dd
 
+on: [push]
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: a
+        run: echo "Hello"
