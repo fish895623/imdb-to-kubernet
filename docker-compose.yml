@@ -5,6 +5,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: fish895623/testapp:latest
-    ports:
-      - 8080:8080
+    image: fish895623/imdb-to-kubernet:latest
