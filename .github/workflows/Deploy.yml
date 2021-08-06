@@ -41,12 +41,10 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_HUB }}" | docker login -u ${{ github.actor }} --password-stdin
 
-      - name: Set Image tags
+      - name: Build & Push image
         run: |
           export TAG=$GITHUB_RUN_NUMBER
-
-      - name: Build & Push image
-        run: docker-compose build && docker-compose push
+          docker-compose build && docker-compose push
 
   deploy:
     needs: push
