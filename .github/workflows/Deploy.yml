@@ -47,9 +47,13 @@ jobs:
           docker-compose build && docker-compose push
 
   deploy:
+    env:
+      namespace: transformer
     needs: push
     runs-on: ubuntu-latest
     steps:
+      - name: Testing env
+        run: echo ${{ env.namespace }}
       - name: create namespace
         run: |
           if kubectl get namespaces | awk '!/^(NAME)/{ print $1 }' | grep '^transformer$'; then
