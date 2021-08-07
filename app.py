@@ -2,7 +2,7 @@
 """flask app."""
 from flask import Flask, render_template, request
 
-from transformer import model, predict, transformer
+from transformer import model, predict
 
 app = Flask(__name__)
 
