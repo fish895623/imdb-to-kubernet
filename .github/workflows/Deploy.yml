@@ -50,6 +50,14 @@ jobs:
     needs: push
     runs-on: ubuntu-latest
     steps:
+      - name: create namespace
+        run: |
+          if kubectl get namespaces | awk '!/^(NAME)/{ print $1 }' | grep '^transformer$'; then
+            echo -n "namespace exists"
+          else
+            kubectl create namespace transformer
+          fi
+
       - name: deploy to cluster
         uses: steebchen/kubectl@master
         env:
